@@ -70,12 +70,13 @@ namespace TestProject1
             Assert.True(i.BitField<char>(12, 6) == '?');                      // 63 == '?'
 
         }
-
+        [Fact]
         public void SetBits()
         {
             int i = 0;
             Assert.True(i.SetBits((0b_111).Bits(0, 3)) == 7);
-            Assert.True(i.SetBit(31, true) == -7);
+            i = int.MaxValue;
+            Assert.True(i.SetBits(new bool[] { true }, 31) == -1);
         }
 
     }
