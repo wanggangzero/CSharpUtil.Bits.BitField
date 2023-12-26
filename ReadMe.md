@@ -6,7 +6,7 @@ A C# BitField library.
 
 Examples:
 
-0. Demo (示例)
+0x00. Demo (示例)
 ``` C#
 ABT bT = new ABT() { EA = A.Eghit | A.Two, EB = B.Three, IsBitFields = true };
 // 是的,支持枚举, 甚至其他unmanaged数据
@@ -55,7 +55,7 @@ struct ABT : IBitFieldable<ABT, int>
 }
 ```
 
-1. SnowFlake (分布式开发中的雪花ID算法)  
+0x01. SnowFlake (分布式开发中的雪花ID算法)  
 ![snow flake](image.png)
 
 ``` C#
@@ -98,7 +98,7 @@ class SnowFlake
     long m_data;
 }
 ```
-2. RGBA In Graphic and Images (图形图像中的RGBA)
+0x02. RGBA In Graphic and Images (图形图像中的RGBA)
 ``` C#
 struct RGB565
 {
@@ -146,7 +146,7 @@ struct RGBA5551
 
 ```
 
-3.  IPV6 Header (网络开发中的IPv6包头)
+0x03.  IPV6 Header (网络开发中的IPv6包头)
 ``` C#
 
 struct IPV6Head

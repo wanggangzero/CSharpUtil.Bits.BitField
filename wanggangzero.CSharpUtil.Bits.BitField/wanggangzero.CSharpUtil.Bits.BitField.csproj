@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<VersionPrefix>1.0.2</VersionPrefix>
+		<VersionPrefix>1.0.3</VersionPrefix>
 		<Authors>$(AssemblyName),wanggangzero</Authors>
 		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
 		<PackageIcon>icon.jpg</PackageIcon>
@@ -14,10 +14,19 @@
 		<Title>A C# BitField library.</Title>
 		<Description>A C# BitField library.</Description>
 		<Copyright>wanggangzero@qq.com</Copyright>
-		<PackageReleaseNotes> Extended Int128/UInt128, add descriptions and examples.  
-			Personally, I think this code is ready to use, but anyone using it needs to test it carefully and at their own risk.  
-个人认为此代码已经可以使用, 但任何人使用它都需要自己进行谨慎测试并承担其风险.</PackageReleaseNotes>
+		<PackageReleaseNotes>
+			Retouching details(修改一些细节)  
+			Personally, I think this code is ready to use, but anyone using it needs to test it carefully and at their own risk.
+			个人认为此代码已经可以使用, 但任何人使用它都需要自己进行谨慎测试并承担其风险.</PackageReleaseNotes>
+		<RepositoryUrl>https://github.com/wanggangzero/CSharpUtil.Bits.BitField.git</RepositoryUrl>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\ReadMe.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="coverlet.collector" Version="6.0.0">
