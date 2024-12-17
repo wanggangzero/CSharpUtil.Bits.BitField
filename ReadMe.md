@@ -31,29 +31,31 @@ enum B : byte
     Three = 3,
 } 
 
-struct ABT : IBitFieldable<ABT, int>
-{
-    private int data;
-    public int Data() => data;
 
-    public static implicit operator int(ABT self) => self.data;
-    public static explicit operator ABT(int mData) => new() { data = mData };
+//  sizeof(ABT) = 1      
+struct ABT 
+{
+    private byte data;
+    public byte Data() => data;
+
+    public static implicit operator byte(ABT self) => self.data;
+    public static explicit operator ABT(byte mData) => new() { data = mData };
 
     public bool IsBitFields
     {
         get => data.BitField<bool>(0, 1);
-        set => data.Set2Bitfield(value, 0, 1);
+        set => data.SetBitField(value, 0, 1);
     }
     public A EA
     {
         get => data.BitField<A>(1, 4);
-        set => data.Set2Bitfield(value, 1, 4);
+        set => data.SetBitField(value, 1, 4);
     }
 
     public B EB
     {
         get => data.BitField<B>(5, 2);
-        set => data.Set2Bitfield(value, 5, 2);
+        set => data.SetBitField(value, 5, 2);
     }
 
 }
@@ -82,20 +84,20 @@ class SnowFlake
     public int SerialNumber
     {
         get => m_data.BitField<int>(0, 12);
-        set => m_data.Set2Bitfield(value, 0, 12);
+        set => m_data.SetBitField(value, 0, 12);
     }
 
     // 41位时间戳
     public long TimeStamp
     {
         get => m_data.BitField<long>(23, 41);
-        private set => m_data.Set2Bitfield(value, 23, 41);
+        private set => m_data.SetBitField(value, 23, 41);
     }
     // 10位设备id
     public int MachineID
     {
         get => m_data.BitField<int>(12, 10);
-        set => m_data.Set2Bitfield(value, 12, 10);
+        set => m_data.SetBitField(value, 12, 10);
     }
 
     // 内部数据用于存储实际bits
@@ -104,46 +106,48 @@ class SnowFlake
 ```
 0x02. RGBA In Graphic and Images (图形图像中的RGBA)
 ``` C#
+// sizeof(RGB565) = 2, := we can control the layout same as mData
 struct RGB565
 {
     public byte R
     {
         get => mData.BitField<byte>(0, 5);
-        set => mData.Set2Bitfield(value, 0, 5);
+        set => mData.SetBitField(value, 0, 5);
     }
     public byte G
     {
         get => mData.BitField<byte>(5, 6);
-        set => mData.Set2Bitfield(value, 5, 6);
+        set => mData.SetBitField(value, 5, 6);
     }
     public byte B
     {
         get => mData.BitField<byte>(11, 5);
-        set => mData.Set2Bitfield(value, 11, 5);
+        set => mData.SetBitField(value, 11, 5);
     }
     public ushort mData;
 }
+// sizeof(RGB5551) = 2, := we can control the layout same as mData
 struct RGBA5551
 {
     public byte R
     {
         get => mData.BitField<byte>(0, 5);
-        set => mData.Set2Bitfield(value, 0, 5);
+        set => mData.SetBitField(value, 0, 5);
     }
     public byte G
     {
         get => mData.BitField<byte>(5, 5);
-        set => mData.Set2Bitfield(value, 5, 5);
+        set => mData.SetBitField(value, 5, 5);
     }
     public byte B
     {
         get => mData.BitField<byte>(10, 5);
-        set => mData.Set2Bitfield(value, 10, 5);
+        set => mData.SetBitField(value, 10, 5);
     }
     public byte A
     {
         get => mData.BitField<byte>(15, 1);
-        set => mData.Set2Bitfield(value, 15, 1);
+        set => mData.SetBitField(value, 15, 1);
     }
     public ushort mData;
 }
@@ -152,44 +156,91 @@ struct RGBA5551
 
 0x03.  IPV6 Header (网络开发中的IPv6包头)
 ``` C#
-
+//    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//    | 版本  | 优先权 |              流     标     签                 |
+//    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//    |         有效载荷长度         |    下一报头   |     跳限制      |
+//    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//    |                                                               |
+//    +                                                               +
+//    |                                                               |
+//    +                         源    地    址                        +
+//    |                              long                             |
+//    +                                                               +
+//    |                                                               |
+//    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//    |                                                               |
+//    +                                                               +
+//    |                                                               |
+//    +                        目   的   地   址                      +
+//    |                              long                             |
+//    +                                                               +
+//    |                                                               |
+//    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+// sizeof(IPV6Head) = 8, := we can control the layout same as mData
+// yes, I designed it on purpose. The memory layout is very clean.
+// 所有例子我都是专门设计的, 内存布局十分干净, 可以方便的直接进行IO复制.
 struct IPV6Head
 {
     public byte Version
     {
         get => mData.BitField<byte>(0, 4);
-        set => mData.Set2Bitfield(value, 0, 4);
+        set => mData.SetBitfield(value, 0, 4);
     }
     public byte TrafficClass
     {
         get => mData.BitField<byte>(5, 8);
-        set => mData.Set2Bitfield(value, 5, 8);
+        set => mData.SetBitField(value, 5, 8);
     }
     public int FlowLabel
     {
         get => mData.BitField<int>(12, 20);
-        set => mData.Set2Bitfield(value, 12, 20);
+        set => mData.SetBitField(value, 12, 20);
     }
 
     public int PayloadLength
     {
         get => mData.BitField<int>(32, 16);
-        set => mData.Set2Bitfield(value, 32, 16);
+        set => mData.SetBitField(value, 32, 16);
     }
     public byte NextHeader
     {
         get => mData.BitField<byte>(48, 8);
-        set => mData.Set2Bitfield(value, 48, 8);
+        set => mData.SetBitField(value, 48, 8);
     }
     public byte HopLimit
     {
         get => mData.BitField<byte>(56, 8);
-        set => mData.Set2Bitfield(value, 56, 8);
+        set => mData.SetBitField(value, 56, 8);
     }
     public ulong mData;
 }
 ```
+0x04 [BitFields] Attribute模拟定义一个位域struct (version >1.0.10 and .net9.0)
+```C#
+    // 它的内存布局也是设计为与BaseType一致, 可以直接内存读写. 
+    // like: var s = (Some)BinaryReader.ReadInt32(xx); or Use UnSafe.Read<Some>(ptr);
+    // Its memory layout is also designed to be consistent with that of BaseType, 
+    // allowing for direct read and write operations in memory.
+    [BitFields(EBitFieldBaseType.Int32)]
+    public partial struct Some
+    {
+        [BitOffset(0, 8)]     // 
+        public partial byte Age { get; set; }
 
+        [BitOffset(8, 1)]
+        public partial bool Sex { get; set; }
+
+        [BitOffset(16, 12)]
+        internal partial int Year { get; set; }
+
+        [BitOffset(31, 1)]
+        public partial bool Sign { get; internal set; }
+
+        //[BitOffset(31, 1)]  // 这个是无效的
+        public static bool Ok { get; }
+    }
+```
 ---
 At last(写在最后):   
 Personally, I think this code is ready to use, but anyone using it needs to test it carefully and at their own risk.  

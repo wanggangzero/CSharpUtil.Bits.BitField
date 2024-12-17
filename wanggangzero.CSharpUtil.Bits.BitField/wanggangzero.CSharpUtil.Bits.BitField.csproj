@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<TargetFrameworks>netstandard2.0;net60;net7.0;net8.0;net9.0</TargetFrameworks>
+		<LangVersion>preview</LangVersion>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<VersionPrefix>1.0.3</VersionPrefix>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<VersionPrefix>1.0.10</VersionPrefix>
 		<Authors>$(AssemblyName),wanggangzero</Authors>
 		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
 		<PackageIcon>icon.jpg</PackageIcon>
@@ -15,43 +15,59 @@
 		<Description>A C# BitField library.</Description>
 		<Copyright>wanggangzero@qq.com</Copyright>
 		<PackageReleaseNotes>
-			Retouching details(修改一些细节)  
+			扩展targetFramework适配, 增加.netstandard2.0,.net6.0,.net7.0和.net9.0支持,
+			特别的,在.net9.0下尝试增加了BitfieldAttribute,结合SourceGenerator自动生成partial property来模仿struct位域.
+			
 			Personally, I think this code is ready to use, but anyone using it needs to test it carefully and at their own risk.
-			个人认为此代码已经可以使用, 但任何人使用它都需要自己进行谨慎测试并承担其风险.</PackageReleaseNotes>
+			个人认为此代码已经可以使用, 但任何人使用它都需要自己进行谨慎测试并承担其风险.
+		</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/wanggangzero/CSharpUtil.Bits.BitField.git</RepositoryUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework) != 'netstandard2.0'">
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0|AnyCPU'">
+		<WarningLevel>8</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0|AnyCPU'">
+		<WarningLevel>8</WarningLevel>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="..\icon.jpg">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	  <None Include="..\ReadMe.md">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
+		<None Include="..\image.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="coverlet.collector" Version="6.0.0">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-	  <PackageReference Include="wanggangzero.CSharpUtil.Bits.Dancing" Version="1.0.0" />
-	  <PackageReference Include="xunit" Version="2.6.4" />
-	  <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
+		<PackageReference Include="wanggangzero.CSharpUtil.Bits.Dancing" Version="1.0.2" />
 	</ItemGroup>
-
 
 	<ItemGroup>
 	  <None Update="icon.jpg">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
-	  <None Update="ReadMe.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
 	</ItemGroup>
+	<Target Name="_IncludeAllDependencies" BeforeTargets="_GetPackageFiles">
+		<ItemGroup>
+			<None Include="..\wanggangzero.CSharpUtil.Bits.BitField.Analyzers\bin\$(Configuration)\**\*.dll" Pack="True" PackagePath="analyzers\dotnet\cs" />
+		</ItemGroup>
+	</Target>
 
 </Project>
