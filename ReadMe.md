@@ -62,7 +62,7 @@ struct ABT
 ```
 
 0x01. SnowFlake (分布式开发中的雪花ID算法)  
-![snow flake](image.png)
+![snow flake](https://raw.githubusercontent.com/wanggangzero/CSharpUtil.Bits.BitField/main/image.png?raw=true)
 
 ``` C#
 
@@ -216,13 +216,13 @@ struct IPV6Head
     public ulong mData;
 }
 ```
-0x04 [BitFields] Attribute模拟定义一个位域struct (version >1.0.10 and .net9.0)
+0x04 [BitFields] Attribute模拟定义一个位域struct (需要 lib version >=1.0.10 and .net >= 9.0)
 ```C#
     // 它的内存布局也是设计为与BaseType一致, 可以直接内存读写. 
     // like: var s = (Some)BinaryReader.ReadInt32(xx); or Use UnSafe.Read<Some>(ptr);
     // Its memory layout is also designed to be consistent with that of BaseType, 
     // allowing for direct read and write operations in memory.
-    [BitFields(EBitFieldBaseType.Int32)]
+    [BitFields(EBitFieldBaseType.Int64)]
     public partial struct Some
     {
         [BitOffset(0, 8)]     // 
@@ -240,6 +240,57 @@ struct IPV6Head
         //[BitOffset(31, 1)]  // 这个是无效的
         public static bool Ok { get; }
     }
+```
+
+>// then code generator will product code like this:  
+
+```C#
+    public partial struct Some
+    {
+        private Int64 data;
+        public partial Byte Age 
+        {
+            get => data.BitField<Byte>(0, 8);
+            set => data.SetBitField<Byte>(value, 0, 8);
+        }
+
+        public partial Boolean Sex 
+        {
+            get => data.BitField<Boolean>(8, 1);
+            set => data.SetBitField<Boolean>(value, 8, 1);
+        }
+
+        internal partial Int32 Year 
+        {
+            get => data.BitField<Int32>(16, 12);
+            set => data.SetBitField<Int32>(value, 16, 12);
+        }
+
+        public partial Boolean Sign 
+        {
+            get => data.BitField<Boolean>(31, 1);
+            internal set => data.SetBitField<Boolean>(value, 31, 1);
+        }
+
+        /// <summary>
+        /// 原型数据
+        /// </summary>
+        public Int64 Data() => data;
+
+        /// <summary>
+        /// 隐式转换为基础类型
+        /// </summary>
+        /// <param name="self"></param>
+        public static implicit operator Int64(Some self) => self.data;
+
+        /// <summary>
+        /// 从基础类型显式转换为当前类型
+        /// </summary>
+        /// <param name="mData"></param>
+        public static explicit operator Some(Int64 mData) => new() { data = mData };
+
+    }
+
 ```
 ---
 At last(写在最后):   

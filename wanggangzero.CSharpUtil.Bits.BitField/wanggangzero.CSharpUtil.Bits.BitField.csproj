@@ -6,7 +6,7 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<ImplicitUsings>disable</ImplicitUsings>
-		<VersionPrefix>1.0.10</VersionPrefix>
+		<VersionPrefix>1.0.12</VersionPrefix>
 		<Authors>$(AssemblyName),wanggangzero</Authors>
 		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
 		<PackageIcon>icon.jpg</PackageIcon>
@@ -15,11 +15,7 @@
 		<Description>A C# BitField library.</Description>
 		<Copyright>wanggangzero@qq.com</Copyright>
 		<PackageReleaseNotes>
-			扩展targetFramework适配, 增加.netstandard2.0,.net6.0,.net7.0和.net9.0支持,
-			特别的,在.net9.0下尝试增加了BitfieldAttribute,结合SourceGenerator自动生成partial property来模仿struct位域.
-			
-			Personally, I think this code is ready to use, but anyone using it needs to test it carefully and at their own risk.
-			个人认为此代码已经可以使用, 但任何人使用它都需要自己进行谨慎测试并承担其风险.
+			ReadMe.md中显示图片, 改善文档.
 		</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/wanggangzero/CSharpUtil.Bits.BitField.git</RepositoryUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
