@@ -6,7 +6,7 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<ImplicitUsings>disable</ImplicitUsings>
-		<VersionPrefix>1.0.12</VersionPrefix>
+		<VersionPrefix>1.0.13</VersionPrefix>
 		<Authors>$(AssemblyName),wanggangzero</Authors>
 		<PackageReadmeFile>ReadMe.md</PackageReadmeFile>
 		<PackageIcon>icon.jpg</PackageIcon>
@@ -15,7 +15,7 @@
 		<Description>A C# BitField library.</Description>
 		<Copyright>wanggangzero@qq.com</Copyright>
 		<PackageReleaseNotes>
-			ReadMe.md中显示图片, 改善文档.
+			放几个bytes操作扩展.
 		</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/wanggangzero/CSharpUtil.Bits.BitField.git</RepositoryUrl>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -51,7 +51,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="wanggangzero.CSharpUtil.Bits.Dancing" Version="1.0.2" />
+		<PackageReference Include="wanggangzero.CSharpUtil.Bits.Dancing" Version="1.0.13" />
 	</ItemGroup>
 
 	<ItemGroup>

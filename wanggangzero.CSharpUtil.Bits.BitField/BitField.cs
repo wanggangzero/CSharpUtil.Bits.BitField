@@ -4,6 +4,7 @@ namespace wanggangzero.CSharpUtil.Bits.BitField
 #if NET7_0_OR_GREATER
     using System;
     using System.Numerics;
+    using System.Runtime.CompilerServices;
 #endif
     using Bits.Dancing;
     /// <summary>
@@ -11,6 +12,8 @@ namespace wanggangzero.CSharpUtil.Bits.BitField
     /// </summary>
     public static class BitFieldExtension
     {
+
+
         /// <summary>
         /// 位域: 提取 offset 开始的 len 个bit作为T类型数据返回
         /// </summary>
@@ -235,4 +238,39 @@ namespace wanggangzero.CSharpUtil.Bits.BitField
 #endif
 
     }
+}
+
+namespace wanggangzero.CSharpUtil.Bytes {
+    using wanggangzero.CSharpUtil.Bits.Dancing;
+    /// <summary>
+    /// 放几个byte操作扩展
+    /// </summary>
+    public static class BytesUtil {
+
+        /// <summary>
+        /// 提取字节数组
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static byte[] Bytes<T>(this T value) where T : unmanaged => DancingBits.Bytes(value);
+
+        /// <summary>
+        /// 提取unmanaged数据按照网络序的字节数组(BitEndian)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public static byte[] NetBytes<T>(this T v) where T : unmanaged => DancingBits.NetBytes(v);
+        /// <summary>
+        /// 将若干字节转换为指定unmanaged类型(小端序)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="span"></param>
+        /// <param name="ReadAsBigEndian">是否按照大端序读取字节(默认:false)</param>
+        /// <returns></returns>
+        public static T To<T>(this byte[] span, bool ReadAsBigEndian = false) where T : unmanaged => DancingBits.To<T>(span, ReadAsBigEndian);
+
+    }
+
 }

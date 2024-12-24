@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>False</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PublishTrimmed>True</PublishTrimmed>
+  </PropertyGroup>
+
+  <ItemGroup>
+
+  
+
+    <ProjectReference Include="..\wanggangzero.CSharpUtil.Bits.BitField\wanggangzero.CSharpUtil.Bits.BitField.csproj" />
+  </ItemGroup>
+	<ItemGroup>
+		<Analyzer Include="..\wanggangzero.CSharpUtil.Bits.BitField.Analyzers\bin\$(Configuration)\netstandard2.0\wanggangzero.CSharpUtil.Bits.BitField.Analyzers.dll" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+	</ItemGroup>
+</Project>

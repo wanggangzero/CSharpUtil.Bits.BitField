@@ -1,7 +1,7 @@
-﻿namespace test3
-{
-    using System.Runtime.InteropServices;
+﻿namespace test
+{ 
     using wanggangzero.CSharpUtil.Bits.BitField;
+    using wanggangzero.CSharpUtil.Bytes;
 
     internal class Program
     {
@@ -12,6 +12,8 @@
             s.Sex = true;
             s.Year = 2024;
             s.Sign = false;
+
+
             //var options = new JsonSerializerOptions
             //{
             //    // 设置TypeInfoResolver为默认的解析器，这将启用反射
@@ -20,7 +22,10 @@
 
 
             //Console.WriteLine(JsonSerializer.Serialize(s, options));
-            Console.WriteLine($"age:{s.Age}, sex:{s.Sex}, sign:{s.Sign}");
+            long l = s;
+            //l += 2;
+            s = (Some)l;
+            Console.WriteLine($"age:{s.Age}, sex:{s.Sex}, sign:{s.Sign} {l}");
 
             Console.WriteLine("Hello, World!");
         }
@@ -29,24 +34,9 @@
 
 
 
-    [BitFields(EBitFieldBaseType.Int32)]
+    [BitFields(EBitFieldBaseType.Int64)]
     public partial struct Some
     {
-        /// <summary>
-        /// 基础数据
-        /// </summary>
-        public int Data() => data;
-        /// <summary>
-        /// 隐式转换为基础类型
-        /// </summary>
-        /// <param name="self"></param>
-        public static implicit operator int(Some self) => self.data;
-        /// <summary>
-        /// 从基础类型显式转换为当前类型
-        /// </summary>
-        /// <param name="mData"></param>
-        public static explicit operator Some(int mData) => new() { data = mData };
-
         [BitOffset(0, 8)]     // 1st 3 bits (in 1st byte) are b1
         public partial byte Age { get; set; }
 
@@ -57,12 +47,31 @@
         internal partial int Year { get; set; }
 
         [BitOffset(31, 1)]
-        public partial bool Sign { get; internal set; }
+        public partial  bool Sign { get; internal set; }
 
+         
 
-
-        //[BitOffset(31, 1)]  // 这个是无效的
+        [BitOffset(31, 1)]  // 这个是无效的
         public static bool Ok { get; }
 
+        ///// <summary>
+        ///// 序列化为字节数组
+        ///// </summary>
+        ///// <returns></returns>
+        //public byte[] Bytes() => BytesUtil.Bytes(this);
+        ///// <summary>
+        ///// 序列化为网络序字节数组(大端序)
+        ///// </summary>
+        ///// <returns></returns>
+        //public byte[] NetBytes()=> BytesUtil.NetBytes(this);
+        ///// <summary>
+        ///// 从字节数组反序列化数据结构
+        ///// </summary>
+        ///// <param name="bytes"></param>
+        ///// <returns></returns>
+        //public static Some CastFrom(byte[] bytes) => bytes.To<Some>();
+
     }
+
+
 }

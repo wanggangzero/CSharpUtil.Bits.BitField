@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wanggangzero.CSharpUtil.Bit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test3", "..\test3\test3.csproj", "{4E8ECE61-128C-4AD0-9892-D275B21CAF8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "..\test\test.csproj", "{EC0305D6-346C-402B-B913-AE5D2F5A7584}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4E8ECE61-128C-4AD0-9892-D275B21CAF8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E8ECE61-128C-4AD0-9892-D275B21CAF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E8ECE61-128C-4AD0-9892-D275B21CAF8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC0305D6-346C-402B-B913-AE5D2F5A7584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC0305D6-346C-402B-B913-AE5D2F5A7584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC0305D6-346C-402B-B913-AE5D2F5A7584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC0305D6-346C-402B-B913-AE5D2F5A7584}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

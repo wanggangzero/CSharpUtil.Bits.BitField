@@ -289,6 +289,22 @@ struct IPV6Head
         /// <param name="mData"></param>
         public static explicit operator Some(Int64 mData) => new() { data = mData };
 
+        /// <summary>
+        /// 序列化为字节数组
+        /// </summary>
+        /// <returns></returns>
+        public byte[] Bytes() => BytesUtil.Bytes(this);
+        /// <summary>
+        /// 序列化为网络序字节数组(大端序)
+        /// </summary>
+        /// <returns></returns>
+        public byte[] NetBytes()=> BytesUtil.NetBytes(this);
+        /// <summary>
+        /// 从字节数组反序列化数据结构
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static Some CastFrom(byte[] bytes) => bytes.To<Some>();
     }
 
 ```
